@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	http "github.com/bogdanfinn/fhttp"
 	"io"
+	"reflect"
 )
 
 var useLog bool
@@ -27,11 +28,23 @@ func NewFlexHttpClient(config *Config) (*FlexHttp, error) {
 func (f *FlexHttp) Do(req *RQ) (*Response, error) {
 	var bodyReader io.Reader
 	if req.Body != nil {
-		bodyBytes, err := json.Marshal(req.Body)
-		if err != nil {
-			return nil, err
+		switch reflect.TypeOf(req.Body).Kind() {
+		case reflect.String:
+			bodyReader = bytes.NewBufferString(req.Body.(string))
+			break
+		case reflect.Slice:
+			bodyBytes, ok := req.Body.([]byte)
+			if ok {
+				bodyReader = bytes.NewBuffer(bodyBytes)
+			}
+			break
+		default:
+			bodyBytes, err := json.Marshal(req.Body)
+			if err != nil {
+				return nil, err
+			}
+			bodyReader = bytes.NewBuffer(bodyBytes)
 		}
-		bodyReader = bytes.NewBuffer(bodyBytes)
 	}
 
 	var header http.Header
