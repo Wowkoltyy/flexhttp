@@ -1,4 +1,4 @@
-package cleanhttp
+package flexhttp
 
 import (
 	"encoding/base64"

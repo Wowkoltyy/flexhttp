@@ -5,8 +5,8 @@ import (
 	"io"
 	"strings"
 
-	"github.com/Implex-ltd/cleanhttp/cleanhttp"
 	"github.com/Implex-ltd/fingerprint-client/fpclient"
+	"github.com/Wowkoltyy/flexhttp/flexhttp"
 	http "github.com/bogdanfinn/fhttp"
 )
 
@@ -19,7 +19,7 @@ func main() {
 		panic(err)
 	}
 
-	c, err := cleanhttp.NewCleanHttpClient(&cleanhttp.Config{
+	c, err := flexhttp.NewCleanHttpClient(&flexhttp.Config{
 		BrowserFp: fp,
 		//Proxy:     "http://user:pass@ip:port",
 	})
@@ -43,7 +43,7 @@ func main() {
 	 * To get default one use: c.GetDefaultHeader()
 	 */
 
-	resp, err := c.Do(cleanhttp.RequestOption{
+	resp, err := c.Do(flexhttp.RequestOption{
 		Method: "GET", // GET, POST, PUT, PATCH, DELETE
 		Url:    "https://discord.com/api/v9/experiments",
 		Header: http.Header{
@@ -90,7 +90,7 @@ func main() {
 	defer resp.Body.Close()
 
 	// Exact same TLS as chrome 114 !
-	resp, err = c.Do(cleanhttp.RequestOption{
+	resp, err = c.Do(flexhttp.RequestOption{
 		Method: "POST", // GET, POST, PUT, PATCH, DELETE
 		Url:    "https://discord.com/api/v9/track/ott",
 		Header: http.Header{
