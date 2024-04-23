@@ -3,7 +3,6 @@ module github.com/Wowkoltyy/flexhttp
 go 1.22.2
 
 require (
-	github.com/Implex-ltd/fingerprint-client v0.0.0-20230830235428-380e1bbcfa4b
 	github.com/bogdanfinn/fhttp v0.5.28
 	github.com/bogdanfinn/tls-client v1.7.1
 )
