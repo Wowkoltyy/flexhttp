@@ -47,7 +47,7 @@ func (f *FlexHttp) Do(req *RQ) (*Response, error) {
 		}
 	}
 
-	var header http.Header
+	header := http.Header{}
 	if req.Headers != nil {
 		for k, v := range req.Headers {
 			header.Set(k, v[0])
